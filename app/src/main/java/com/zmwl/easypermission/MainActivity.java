@@ -72,43 +72,18 @@ public class MainActivity extends BaseActivity {
         startActivity(intent);
     }
 
+
     //同意授权
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // Forward results to EasyPermissions
-        //跳转到onPermissionsGranted或者onPermissionsDenied去回调授权结果
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
-
-
-    @Override
     public void onPermissionsGranted(int requestCode, List<String> list) {
-        // Some permissions have been granted
-        // ...
         Log.i(TAG, "onPermissionsGranted:" + requestCode + ":" + list.size());
         call();
     }
 
-    //拒绝授权
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
-        // Some permissions have been denied
-        // ...
-
-        Log.i(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
-
-        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-        // This will display a dialog directing them to enable the permission in app settings.
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            new AppSettingsDialog.Builder(this).build().show();
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             //拒绝授权后，从系统设置了授权后，返回APP进行相应的操作
             Log.i(TAG, "onPermissionsDenied:------>自定义设置授权后返回APP");
